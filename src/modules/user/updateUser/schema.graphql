@@ -1,0 +1,16 @@
+"Update User Input"
+input UpdateUserPayload {
+  "The user's email"
+  email: String
+  "The user's first name"
+  first_name: String
+  "The user's last name"
+  last_name: String
+}
+
+type Mutation {
+  "The mutation will update a user and return a user object"
+  updateUser(id: String!, payload: UpdateUserPayload!): UserUpdateResult
+}
+
+union UserUpdateResult = User | UserNotFoundError | UserAlreadyExistsError

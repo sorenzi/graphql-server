@@ -1,0 +1,5 @@
+"Basic Error interface to be used by all errors"
+interface Error {
+  "The error message"
+  message: String!
+}

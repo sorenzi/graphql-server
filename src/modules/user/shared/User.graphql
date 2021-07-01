@@ -1,0 +1,22 @@
+"User Object"
+type User {
+  "The user's id (uuid)"
+  id: String!
+  "The user's email"
+  email: String!
+  "The user role enum (admin/manager/client/user)"
+  role: String!
+  "The user's first name"
+  first_name: String
+  "The user's last name"
+  last_name: String
+}
+
+"User not found error"
+type UserNotFoundError implements Error {
+  "The error message"
+  message: String!
+}
+
+"User result for fetching/updating a user"
+union UserResult = User | UserNotFoundError

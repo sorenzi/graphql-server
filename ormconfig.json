@@ -1,0 +1,75 @@
+[
+   {
+      "name": "default",
+      "type": "postgres",
+      "host": "localhost",
+      "port": 5439,
+      "username": "orenzitoun",
+      "password": "",
+      "database": "",
+      "logging": true,
+      "entities": [
+         "src/entity/*.ts"
+      ],
+      "migrations": [
+         "src/migration/*.ts"
+      ],
+      "subscribers": [
+         "src/subscriber/*.ts"
+      ],
+      "cli": {
+         "entitiesDir": "src/entity",
+         "migrationsDir": "src/migration",
+         "subscribersDir": "src/subscriber"
+      }
+   },
+   {
+      "name": "test",
+      "type": "postgres",
+      "host": "localhost",
+      "port": 5440,
+      "username": "orenzitoun",
+      "password": "",
+      "database": "",
+      "logging": false,
+      "dropSchema": true,
+      "entities": [
+         "src/entity/**/*.ts"
+      ],
+      "migrations": [
+         "src/migration/**/*.ts"
+      ],
+      "subscribers": [
+         "src/subscriber/**/*.ts"
+      ],
+      "cli": {
+         "entitiesDir": "src/entity",
+         "migrationsDir": "src/migration",
+         "subscribersDir": "src/subscriber"
+      }
+   },
+   {
+      "name": "production",
+      "type": "postgres",
+      "host": "localhost",
+      "port": 5439,
+      "username": "orenzitoun",
+      "password": "",
+      "database": "",
+      "logging": false,
+      "entities": [
+         "src/entity/**/*.ts"
+      ],
+      "migrations": [
+         "src/migration/**/*.ts"
+      ],
+      "subscribers": [
+         "src/subscriber/**/*.ts"
+      ],
+      "cli": {
+         "entitiesDir": "src/entity",
+         "migrationsDir": "src/migration",
+         "subscribersDir": "src/subscriber"
+      }
+   }
+]

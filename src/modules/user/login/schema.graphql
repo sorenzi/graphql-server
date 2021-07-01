@@ -1,0 +1,24 @@
+"Create a new user account"
+type Query {
+  " This query takes email and password parameters and responds with a User or error if user already exists"
+  login(email: String!, password: String!): UserLoginResult
+}
+
+"Login error with bad credentials"
+type WrongEmailOrPasswordError implements Error {
+  "The error message"
+  message: String!
+}
+
+"Successful login response object including the user object and access jwt tokens"
+type UserLogin {
+  "User account"
+  user: User!
+  "Short lived jwt access token"
+  accessToken: String!
+  "Long lived jwt access token"
+  refreshToken: String!
+}
+
+"Login result"
+union UserLoginResult = UserLogin | WrongEmailOrPasswordError

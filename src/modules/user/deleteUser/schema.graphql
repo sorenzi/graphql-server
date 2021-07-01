@@ -1,0 +1,13 @@
+"Delete a user account"
+type Mutation {
+  " This mutation will delete a user"
+  deleteUser(id: String!): UserDeleteResult
+}
+
+"Generic entity successful delete result"
+type ObjectDeleteResult {
+  "Success flag"
+  success: Boolean!
+}
+
+union UserDeleteResult = UserNotFoundError | ObjectDeleteResult

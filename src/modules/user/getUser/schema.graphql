@@ -1,0 +1,5 @@
+"Get User"
+type Query {
+  " This query takes a user id as a parameter and responds with a UserResult"
+  getUser(id: String!): UserResult
+}

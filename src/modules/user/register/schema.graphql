@@ -1,0 +1,22 @@
+"Register Input"
+input RegisterInput {
+  email: String!
+  password: String!
+  role: String
+  first_name: String
+  last_name: String
+}
+"Create a new user account"
+type Mutation {
+  " This mutation takes email and password parameters and responds with a User or error if user already exists"
+  register(payload: RegisterInput!): UserRegisterResult
+}
+
+"User already exists for email error"
+type UserAlreadyExistsError implements Error {
+  "The error message"
+  message: String!
+}
+
+"User register result"
+union UserRegisterResult = UserLogin | UserAlreadyExistsError
