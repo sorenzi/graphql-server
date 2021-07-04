@@ -15,7 +15,7 @@ const express = require('express');
 export const startServer = async () => {
   const app = express();
 
-  // merge all our graphql typedefs and resolves across different folders
+  // merge all our graphql typedefs and resolvers across different folders
   const pathToModules = path.join(__dirname, './modules');
   const allSchemas = glob.sync(`${pathToModules}/**/**/*.graphql`).map((x) => {
     return loadFilesSync(x, { extensions: ['graphql'] });
