@@ -77,7 +77,7 @@ export default (handlers: IResolverHandler[], secret: string) => {
 
     let context = {};
     const { auth, validate } = handler;
-    // If a validate object was set in the handler valid the request user input with the given Joi schema
+    // If a validate object was set in the handler validate the request user input with the given Joi schema
     if (validate && variables) {
       Object.keys(validate).forEach((key) => {
         const schema = validate[key];
