@@ -1,3 +1,7 @@
+// This is middleware will add a layer of user authentication and authorization
+// and input payload validation using Joi. Adding authentication and validation is optional
+// and may vary depending on your needs in the resolver handler implementation
+
 import Joi = require('joi');
 import gql from 'graphql-tag';
 
@@ -16,22 +20,27 @@ export interface ResolverMap {
   };
 }
 
+// Supported authentication types
 export enum AuthType {
   JWT = 'jwt',
   Session = 'session'
 }
 
-export interface ResolverAuth {
+// Handler authentication interface, use `scope` to add user role validation
+export interface HandlerAuth {
   strategies: AuthType[];
   scope?: string[];
 }
 
+// Input validation interface, use this to validate user `input` parameters using `Joi` beyond just type such as validate if string is email or if string is longer/shorter for a given value
 export interface InputValidation {
   [key: string]: Joi.ObjectSchema | Joi.Schema;
 }
 
+// Resolver handler interface
+
 export interface IResolverHandler {
-  auth?: ResolverAuth;
+  auth?: HandlerAuth;
   validate?: InputValidation;
   resolver: ResolverMap;
 }
@@ -53,6 +62,7 @@ export default (handlers: IResolverHandler[], secret: string) => {
       return;
     }
 
+    // parsing the gql portion of the request into workable json
     const parsedQuery = gql`
       ${query}
     `;
@@ -61,6 +71,7 @@ export default (handlers: IResolverHandler[], secret: string) => {
       return;
     }
 
+    // getting the registered handler for this request identifier
     const handler = handlersMap[handlerIdentifier];
     if (!handler) {
       return;
@@ -68,6 +79,7 @@ export default (handlers: IResolverHandler[], secret: string) => {
 
     let context = {};
     const { auth, validate } = handler;
+    // If a validate object was set in the handler valid it the request input with the given Joi schema
     if (validate && variables) {
       Object.keys(validate).forEach((key) => {
         const schema = validate[key];
@@ -79,6 +91,8 @@ export default (handlers: IResolverHandler[], secret: string) => {
       });
     }
 
+    // If authorization strategy was set in the handler use it to validate the
+    // JWT authorization header token and also validate the user scope (role) if applicable
     if (auth) {
       const { strategies, scope } = auth;
       strategies.forEach((strategy) => {
