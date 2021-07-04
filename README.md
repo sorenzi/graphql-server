@@ -10,9 +10,9 @@
 
 Once the server is running go to: http://localhost:4000/graphql
 
-## Useful queries:
+# Useful queries
 
-# Register:
+## Register
 
 ```
 mutation Mutation($registerInput: RegisterInput!) {
@@ -50,7 +50,7 @@ mutation Mutation($registerInput: RegisterInput!) {
 }
 ```
 
-# Login
+## Login
 
 ```
 query Query($loginInput: LoginInput!) {
@@ -85,7 +85,7 @@ Query Variable:
 }
 ```
 
-# Get User
+## Get User
 
 ```
 query Query($getUserId: String!) {
@@ -121,7 +121,7 @@ Add Authorization header (use the `accessToken` from the login or register respo
 }
 ```
 
-# Update User
+## Update User
 
 ```
 mutation UpdateUserMutation($updateUserId: String!, $updateUserInput: UpdateUserPayload!) {
@@ -159,7 +159,7 @@ Query Variable:
 
 Add Authorization header same as `Get User`
 
-# Delete User
+## Delete User
 
 ```
 mutation UpdateUserMutation($deleteUserId: String!) {
