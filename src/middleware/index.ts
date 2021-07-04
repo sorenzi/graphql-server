@@ -32,13 +32,12 @@ export interface HandlerAuth {
   scope?: string[];
 }
 
-// Input validation interface, use this to validate user `input` parameters using `Joi` beyond just type such as validate if string is email or if string is longer/shorter for a given value
+// Input validation interface, use this to validate user `input` parameters using `Joi` beyond just type such as validate if string is email or if string is longer/shorter than a given value
 export interface InputValidation {
   [key: string]: Joi.ObjectSchema | Joi.Schema;
 }
 
 // Resolver handler interface
-
 export interface IResolverHandler {
   auth?: HandlerAuth;
   validate?: InputValidation;
@@ -79,7 +78,7 @@ export default (handlers: IResolverHandler[], secret: string) => {
 
     let context = {};
     const { auth, validate } = handler;
-    // If a validate object was set in the handler valid it the request input with the given Joi schema
+    // If a validate object was set in the handler valid the request user input with the given Joi schema
     if (validate && variables) {
       Object.keys(validate).forEach((key) => {
         const schema = validate[key];
@@ -91,7 +90,7 @@ export default (handlers: IResolverHandler[], secret: string) => {
       });
     }
 
-    // If authorization strategy was set in the handler use it to validate the
+    // If an authorization strategy was set in the handler use it to validate the
     // JWT authorization header token and also validate the user scope (role) if applicable
     if (auth) {
       const { strategies, scope } = auth;
