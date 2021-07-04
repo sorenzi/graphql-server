@@ -29,6 +29,7 @@ export interface ResolverAuth {
 export interface InputValidation {
   [key: string]: Joi.ObjectSchema | Joi.Schema;
 }
+
 export interface IResolverHandler {
   auth?: ResolverAuth;
   validate?: InputValidation;

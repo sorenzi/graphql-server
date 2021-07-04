@@ -17,7 +17,7 @@ export const handler: IResolverHandler = {
         const { email, password } = args.input;
         const user = await getUserByEmail(email);
         if (!user) {
-          // Returning an ambiguous response on purpose to not expose if we have a user with this email or not since this is an unprotected endpoint
+          // Returning an ambiguous response on purpose to not expose if we have a user with this email or not since this is an unprotected endpoint.
           return errorForType(ErrorType.WRONG_EMAIL_OR_PASSWORD);
         }
         const valid = await bcrypt.compare(password, user.password);
