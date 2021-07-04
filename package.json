@@ -1,7 +1,7 @@
 {
    "name": "graphql-server",
-   "version": "0.0.1",
-   "description": "Test project",
+   "version": "0.8",
+   "description": "Playing around with Apollo Server",
    "devDependencies": {
       "@graphql-codegen/cli": "1.21.5",
       "@graphql-codegen/introspection": "1.18.2",
@@ -17,11 +17,8 @@
       "eslint-plugin-import": "^2.23.4",
       "eslint-plugin-node": "^11.1.0",
       "eslint-plugin-promise": "^5.1.0",
-      "joi": "^17.4.0",
-      "joi-to-typescript": "^2.0.1",
       "prettier": "^2.3.2",
       "prettier-eslint": "^12.0.0",
-      "ts-node": "10.0.0",
       "typescript": "4.3.4"
    },
    "dependencies": {
@@ -38,9 +35,12 @@
       "glob": "^7.1.7",
       "graphql": "^15.5.1",
       "graphql-tag": "^2.12.5",
+      "joi": "^17.4.0",
+      "joi-to-typescript": "^2.0.2",
       "jsonwebtoken": "^8.5.1",
       "pg": "^8.6.0",
       "reflect-metadata": "^0.1.13",
+      "ts-node": "^10.0.0",
       "typeorm": "0.2.34"
    },
    "scripts": {
