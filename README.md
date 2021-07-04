@@ -42,7 +42,7 @@ mutation Mutation($registerInput: RegisterInput!) {
 {
 "registerInput": {
     "email": "your@email.com",
-    "password": "Password@1",
+    "password": "YourPassword",
     "role": "manager",
     "first_name": "Oren",
     "last_name": "Manager"
