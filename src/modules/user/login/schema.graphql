@@ -1,13 +1,23 @@
+"Update User Input"
+input LoginInput {
+  "The user's email"
+  email: String!
+  "The user's password"
+  password: String!
+}
+
 "Create a new user account"
 type Query {
   " This query takes email and password parameters and responds with a User or error if user already exists"
-  login(email: String!, password: String!): UserLoginResult
+  login(input: LoginInput!): UserLoginResult
 }
 
 "Login error with bad credentials"
 type WrongEmailOrPasswordError implements Error {
   "The error message"
   message: String!
+  "The error code"
+  code: String!
 }
 
 "Successful login response object including the user object and access jwt tokens"

@@ -15,6 +15,16 @@ export type Scalars = {
 export type Error = {
   /** The error message */
   message: Scalars['String'];
+  /** Unique error type code */
+  code: Scalars['String'];
+};
+
+/** Update User Input */
+export type LoginInput = {
+  /** The user's email */
+  email: Scalars['String'];
+  /** The user's password */
+  password: Scalars['String'];
 };
 
 /** Create a new user account */
@@ -37,14 +47,14 @@ export type MutationDeleteUserArgs = {
 
 /** Create a new user account */
 export type MutationRegisterArgs = {
-  payload: RegisterInput;
+  input: RegisterInput;
 };
 
 
 /** Create a new user account */
 export type MutationUpdateUserArgs = {
   id: Scalars['String'];
-  payload: UpdateUserPayload;
+  input: UpdateUserPayload;
 };
 
 /** Generic entity successful delete result */
@@ -54,26 +64,27 @@ export type ObjectDeleteResult = {
   success: Scalars['Boolean'];
 };
 
-/** Create a new user account */
+/** Get request caller user result */
 export type Query = {
   __typename?: 'Query';
   /**  This query takes a user id as a parameter and responds with a UserResult */
   getUser?: Maybe<UserResult>;
   /**  This query takes email and password parameters and responds with a User or error if user already exists */
   login?: Maybe<UserLoginResult>;
+  /**  This query will return the caller's user result */
+  me?: Maybe<UserResult>;
 };
 
 
-/** Create a new user account */
+/** Get request caller user result */
 export type QueryGetUserArgs = {
   id: Scalars['String'];
 };
 
 
-/** Create a new user account */
+/** Get request caller user result */
 export type QueryLoginArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  input: LoginInput;
 };
 
 /** Register Input */
@@ -115,6 +126,8 @@ export type UserAlreadyExistsError = Error & {
   __typename?: 'UserAlreadyExistsError';
   /** The error message */
   message: Scalars['String'];
+  /** The error code */
+  code: Scalars['String'];
 };
 
 export type UserDeleteResult = UserNotFoundError | ObjectDeleteResult;
@@ -138,6 +151,8 @@ export type UserNotFoundError = Error & {
   __typename?: 'UserNotFoundError';
   /** The error message */
   message: Scalars['String'];
+  /** The error code */
+  code: Scalars['String'];
 };
 
 /** User register result */
@@ -153,4 +168,6 @@ export type WrongEmailOrPasswordError = Error & {
   __typename?: 'WrongEmailOrPasswordError';
   /** The error message */
   message: Scalars['String'];
+  /** The error code */
+  code: Scalars['String'];
 };

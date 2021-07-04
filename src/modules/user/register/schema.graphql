@@ -6,16 +6,19 @@ input RegisterInput {
   first_name: String
   last_name: String
 }
+
 "Create a new user account"
 type Mutation {
   " This mutation takes email and password parameters and responds with a User or error if user already exists"
-  register(payload: RegisterInput!): UserRegisterResult
+  register(input: RegisterInput!): UserRegisterResult
 }
 
 "User already exists for email error"
 type UserAlreadyExistsError implements Error {
   "The error message"
   message: String!
+  "The error code"
+  code: String!
 }
 
 "User register result"

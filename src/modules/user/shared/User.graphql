@@ -16,6 +16,8 @@ type User {
 type UserNotFoundError implements Error {
   "The error message"
   message: String!
+  "The error code"
+  code: String!
 }
 
 "User result for fetching/updating a user"

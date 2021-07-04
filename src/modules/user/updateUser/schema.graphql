@@ -10,7 +10,7 @@ input UpdateUserPayload {
 
 type Mutation {
   "The mutation will update a user and return a user object"
-  updateUser(id: String!, payload: UpdateUserPayload!): UserUpdateResult
+  updateUser(id: String!, input: UpdateUserPayload!): UserUpdateResult
 }
 
 union UserUpdateResult = User | UserNotFoundError | UserAlreadyExistsError

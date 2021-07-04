@@ -2,4 +2,6 @@
 interface Error {
   "The error message"
   message: String!
+  "Unique error type code"
+  code: String!
 }

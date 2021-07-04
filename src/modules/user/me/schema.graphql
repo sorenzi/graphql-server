@@ -1,0 +1,5 @@
+"Get request caller user result"
+type Query {
+  " This query will return the caller's user result"
+  me: UserResult
+}

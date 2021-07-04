@@ -26,9 +26,21 @@ const errorTypename = (type: ErrorType): string => {
   }
 };
 
+const errorCode = (type: ErrorType): string => {
+  switch (type) {
+    case ErrorType.USER_NOT_FOUND:
+      return 'UserNotFoundError';
+    case ErrorType.WRONG_EMAIL_OR_PASSWORD:
+      return 'WrongEmailOrPasswordError';
+    case ErrorType.USER_WITH_EMAIL_EXISTS:
+      return 'UserAlreadyExistsError';
+  }
+};
+
 export const errorForType = (type: ErrorType) => {
   return {
     __typename: errorTypename(type),
-    message: errorMessage(type)
+    message: errorMessage(type),
+    code: errorCode(type)
   };
 };
