@@ -14,7 +14,7 @@ Once the server is running go to: http://localhost:4000/graphql
 
 ## Register
 
-```
+```gql
 mutation Mutation($registerInput: RegisterInput!) {
   register(input: $registerInput) {
     ... on UserLogin {
@@ -38,7 +38,7 @@ mutation Mutation($registerInput: RegisterInput!) {
 
 ### Query Variable
 
-```
+```json
 {
 "registerInput": {
     "email": "your@email.com",
@@ -52,7 +52,7 @@ mutation Mutation($registerInput: RegisterInput!) {
 
 ## Login
 
-```
+```gql
 query Query($loginInput: LoginInput!) {
   login(input:$loginInput) {
     ... on UserLogin {
@@ -76,7 +76,7 @@ query Query($loginInput: LoginInput!) {
 
 Query Variable:
 
-```
+```json
 {
 "loginInput": {
     "email": "your@email.com",
@@ -87,7 +87,7 @@ Query Variable:
 
 ## Get User
 
-```
+```gql
 query Query($getUserId: String!) {
   getUser(id: $getUserId) {
     ... on User {
@@ -107,7 +107,7 @@ query Query($getUserId: String!) {
 
 Query Variable:
 
-```
+```json
 {
   "getUserId": "your_user_id_goes_here"
 }
@@ -115,7 +115,7 @@ Query Variable:
 
 Add Authorization header (use the `accessToken` from the login or register response)
 
-```
+```json
 {
   "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiMmRlMGFiYjktODMyYi00MGVjLWEyYjgtYzM4NWRkZDliMDJlIiwicm9sZXMiOlsibWFuYWdlciJdfSwiaWF0IjoxNjI1NDE4NjA3LCJleHAiOjE2MjU0MTk1MDcsInN1YiI6IjJkZTBhYmI5LTgzMmItNDBlYy1hMmI4LWMzODVkZGQ5YjAyZSJ9.qwDBYWJKxMaF2XyBeMQdgSJqOGCfwjfvHh-TQemnkJw"
 }
@@ -123,7 +123,7 @@ Add Authorization header (use the `accessToken` from the login or register respo
 
 ## Update User
 
-```
+```gql
 mutation UpdateUserMutation($updateUserId: String!, $updateUserInput: UpdateUserPayload!) {
   updateUser(id: $updateUserId, input: $updateUserInput) {
     ... on User {
@@ -147,7 +147,7 @@ mutation UpdateUserMutation($updateUserId: String!, $updateUserInput: UpdateUser
 
 Query Variable:
 
-```
+```json
 {
   "updateUserId": "your_user_id_goes_here",
   "updateUserInput": {
@@ -161,7 +161,7 @@ Add Authorization header same as `Get User`
 
 ## Delete User
 
-```
+```gql
 mutation UpdateUserMutation($deleteUserId: String!) {
   deleteUser(id: $deleteUserId) {
     ... on UserNotFoundError {
@@ -177,7 +177,7 @@ mutation UpdateUserMutation($deleteUserId: String!) {
 
 Query Variable:
 
-```
+```json
 {
   "deleteUserId": "your_user_id_goes_here"
 }
