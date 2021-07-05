@@ -60,7 +60,8 @@ export const startServer = async () => {
   // Connecting to the db
   await createTypeormConnection();
 
-  app.listen({ port: 4000 }, () =>
+  const expressServer = app.listen({ port: 4000 }, () =>
     console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
   );
+  return expressServer;
 };

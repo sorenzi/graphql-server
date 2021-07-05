@@ -1,18 +1,15 @@
 /* eslint-disable no-undef */
 import { Connection, getConnection } from 'typeorm';
 
-import { GraphQLClient } from 'graphql-request';
 import { startServer } from '../../../server';
 import {
+  client,
   createUser,
   generateAccessToken,
   getUser,
   truncateDB
 } from '../../../test/testUtils';
 import { UserRole } from '../constants';
-
-const endpoint = 'http://localhost:4000/graphql';
-const client = new GraphQLClient(endpoint);
 
 const mutation = () => `
 mutation Mutation($deleteUserId: String!) {
@@ -44,12 +41,14 @@ mutation {
 `;
 
 let conn: Connection;
+let server: any;
 beforeAll(async () => {
-  await startServer();
+  server = await startServer();
   conn = getConnection();
 });
 
 afterAll(async () => {
+  await server.close();
   await truncateDB(conn);
   conn.close();
 });

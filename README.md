@@ -10,6 +10,11 @@
 
 Once the server is running go to: http://localhost:4000/graphql
 
+## Running tests
+
+- Run `docker-compose -f docker-compose.test.yml up`
+- Run `yarn test`
+
 # Useful queries
 
 ## Register
@@ -40,7 +45,7 @@ mutation Mutation($registerInput: RegisterInput!) {
 
 ```json
 {
-"registerInput": {
+  "registerInput": {
     "email": "your@email.com",
     "password": "YourPassword",
     "role": "manager",
@@ -54,7 +59,7 @@ mutation Mutation($registerInput: RegisterInput!) {
 
 ```gql
 query Query($loginInput: LoginInput!) {
-  login(input:$loginInput) {
+  login(input: $loginInput) {
     ... on UserLogin {
       user {
         id
@@ -66,10 +71,10 @@ query Query($loginInput: LoginInput!) {
       accessToken
       refreshToken
     }
-  ... on WrongEmailOrPasswordError {
-    message
-    code
-  }
+    ... on WrongEmailOrPasswordError {
+      message
+      code
+    }
   }
 }
 ```
@@ -78,7 +83,7 @@ Query Variable:
 
 ```json
 {
-"loginInput": {
+  "loginInput": {
     "email": "your@email.com",
     "password": "YourPassword"
   }
@@ -124,7 +129,10 @@ Add Authorization header (use the `accessToken` from the login or register respo
 ## Update User
 
 ```gql
-mutation UpdateUserMutation($updateUserId: String!, $updateUserInput: UpdateUserPayload!) {
+mutation UpdateUserMutation(
+  $updateUserId: String!
+  $updateUserInput: UpdateUserPayload!
+) {
   updateUser(id: $updateUserId, input: $updateUserInput) {
     ... on User {
       id

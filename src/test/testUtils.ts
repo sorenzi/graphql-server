@@ -3,6 +3,10 @@ import User from '../entity/User';
 import { createAccessJWT } from '../utils/jwtUtil';
 import * as faker from 'faker';
 import { UserRole } from '../modules/user/constants';
+import { GraphQLClient } from 'graphql-request';
+
+const endpoint = 'http://localhost:4000/graphql';
+export const client = new GraphQLClient(endpoint);
 
 export const truncateDB = async (connection: Connection) => {
   if (process.env.NODE_ENV !== 'test') {

@@ -61,6 +61,7 @@ export default (handlers: IResolverHandler[], secret: string) => {
     }
 
     // parsing the gql portion of the request into json
+    // TODO: look into how to cache this result (maybe generating a hash for the query string)
     const parsedQuery = gql`
       ${query}
     `;
