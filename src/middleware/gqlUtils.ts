@@ -35,13 +35,27 @@ export const extractInput = (query: any, key: string, variables: any) => {
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
-    const { name } = arg;
-    if (name) {
-      const { value } = name;
-      if (value === key) {
-        const payloadKey = arg.value.name.value;
-        if (payloadKey) {
-          return variables[payloadKey];
+    const { name: argumentNameObj } = arg;
+    if (argumentNameObj) {
+      const { value: argumentKeyValue } = argumentNameObj;
+      if (argumentKeyValue === key) {
+        const { value: valueObj } = arg;
+        const { kind: argumentValueKind } = valueObj;
+
+        // checking if the argument is not a variable i.e 'StringValue' in which case we found what we needed
+        if (valueObj && valueObj.block === false) {
+          return valueObj.value;
+        }
+
+        // checking if the argument is a variable if so we get its name and return the value from the 'variables' object in the request body
+        if (argumentValueKind === 'Variable' && variables) {
+          const { name } = valueObj;
+          if (name) {
+            const { value } = name;
+            if (value) {
+              return variables[value];
+            }
+          }
         }
       }
     }
@@ -59,8 +73,8 @@ export const extractIdentifier = (query: any) => {
         return null;
       }
 
-      const resolverType = (query.definitions[0] as any).operation;
-      return `${resolverType}_${resolverName}`.toLowerCase();
+      const { operation } = query.definitions[0] as any;
+      return `${operation}_${resolverName}`.toLowerCase();
     } catch (err) {
       throw new Error(
         `Could not extract resolver identifier: ${JSON.stringify(err)}`

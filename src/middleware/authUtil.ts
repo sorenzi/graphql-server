@@ -27,7 +27,7 @@ export const validateJWTAuth = (
 
   const { user } = decodeToken;
   if (scope) {
-    if (!user.roles || !scope.includes(user.roles)) {
+    if (!user.role || !scope.includes(user.role)) {
       throw new AuthenticationError('Insufficient scope');
     }
   }

@@ -6,3 +6,4 @@ tmp/
 temp/
 /postgres-data
 .env
+/coverage

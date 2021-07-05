@@ -1,8 +1,10 @@
 import { sign, verify } from 'jsonwebtoken';
 import User from '../entity/User';
 
-const AccessTokenDuration = process.env.ACCESS_TOKEN_DURATION || 60 * 15; // 15 min
-const RefreshTokenDuration = process.env.REFRESH_TOKEN_DURATION || 60 * 60 * 24; // 1 days
+const AccessTokenDuration =
+  process.env.ACCESS_TOKEN_DURATION || 7 * 60 * 60 * 24; // 7 Days
+const RefreshTokenDuration =
+  process.env.REFRESH_TOKEN_DURATION || 30 * 60 * 60 * 24; // 30 Days
 
 export const JWTAlgorithm = 'HS256';
 export const JWTSecret = process.env.JWT_SECRET || 'some_long_weird_secret_key';
@@ -20,7 +22,7 @@ const createUserJWT = (
   role: string,
   expiresIn: number | string
 ) => {
-  return sign({ user: { id: userId, roles: [role] } }, JWTSecret, {
+  return sign({ user: { id: userId, role } }, JWTSecret, {
     algorithm: JWTAlgorithm,
     subject: userId,
     expiresIn

@@ -33,6 +33,7 @@
       "password": "",
       "database": "",
       "logging": false,
+      "synchronize": true,
       "dropSchema": true,
       "entities": [
          "src/entity/**/*.ts"

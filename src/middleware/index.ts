@@ -60,10 +60,12 @@ export default (handlers: IResolverHandler[], secret: string) => {
       return;
     }
 
-    // parsing the gql portion of the request into workable json
+    // parsing the gql portion of the request into json
     const parsedQuery = gql`
       ${query}
     `;
+
+    // creating a unique identifer using the query operation and resolver func name
     const handlerIdentifier = extractIdentifier(parsedQuery);
     if (!handlerIdentifier) {
       return;
@@ -77,8 +79,8 @@ export default (handlers: IResolverHandler[], secret: string) => {
 
     let context = {};
     const { auth, validate } = handler;
-    // If a validate object was set in the handler validate the request user input with the given Joi schema
-    if (validate && variables) {
+    // If an input validation object was set in the handler validate the request user input with the given Joi schema
+    if (validate) {
       Object.keys(validate).forEach((key) => {
         const schema = validate[key];
         const input = extractInput(parsedQuery, key, variables);
