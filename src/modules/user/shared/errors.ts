@@ -1,3 +1,5 @@
+import { ApolloError } from 'apollo-server-errors';
+
 export enum ErrorType {
   USER_NOT_FOUND,
   WRONG_EMAIL_OR_PASSWORD,
@@ -14,7 +16,7 @@ const errorMessage = (type: ErrorType): string => {
       return 'User with email already exists';
   }
 };
-
+/*
 const errorTypename = (type: ErrorType): string => {
   switch (type) {
     case ErrorType.USER_NOT_FOUND:
@@ -25,22 +27,18 @@ const errorTypename = (type: ErrorType): string => {
       return 'UserAlreadyExistsError';
   }
 };
-
+*/
 const errorCode = (type: ErrorType): string => {
   switch (type) {
     case ErrorType.USER_NOT_FOUND:
-      return 'UserNotFoundError';
+      return 'USER_NOT_FOUND';
     case ErrorType.WRONG_EMAIL_OR_PASSWORD:
-      return 'WrongEmailOrPasswordError';
+      return 'WRONG_EMAIL_OR_PASSWORD';
     case ErrorType.USER_WITH_EMAIL_EXISTS:
-      return 'UserAlreadyExistsError';
+      return 'USER_WITH_EMAIL_EXISTS';
   }
 };
 
-export const errorForType = (type: ErrorType) => {
-  return {
-    __typename: errorTypename(type),
-    message: errorMessage(type),
-    code: errorCode(type)
-  };
+export const errorForType = (type: ErrorType, options?: {}): ApolloError => {
+  return new ApolloError(errorMessage(type), errorCode(type), options);
 };

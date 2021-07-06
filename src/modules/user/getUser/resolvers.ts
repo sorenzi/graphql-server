@@ -19,7 +19,7 @@ export const handler: IResolverHandler = {
         const user = await getUserById(id);
 
         if (!user) {
-          return errorForType(ErrorType.USER_NOT_FOUND);
+          throw errorForType(ErrorType.USER_NOT_FOUND);
         }
         return renderUser(user);
       }

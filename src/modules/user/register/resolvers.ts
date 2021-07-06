@@ -20,7 +20,7 @@ export const handler: IResolverHandler = {
 
         const existingUser = await getUserByEmail(email);
         if (existingUser) {
-          return errorForType(ErrorType.USER_WITH_EMAIL_EXISTS);
+          throw errorForType(ErrorType.USER_WITH_EMAIL_EXISTS);
         }
 
         const userRole: UserRole = <UserRole>role!;

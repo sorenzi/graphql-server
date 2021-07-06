@@ -22,7 +22,7 @@ export const handler: IResolverHandler = {
 
         const user = await getUserById(id);
         if (!user) {
-          return errorForType(ErrorType.USER_NOT_FOUND);
+          throw errorForType(ErrorType.USER_NOT_FOUND);
         }
 
         // returning an error if we're trying to update a user's email to one that already exists for a different user
@@ -30,17 +30,16 @@ export const handler: IResolverHandler = {
         if (email) {
           const existingUser = await getUserByEmail(email);
           if (existingUser) {
-            return errorForType(ErrorType.USER_WITH_EMAIL_EXISTS);
+            throw errorForType(ErrorType.USER_WITH_EMAIL_EXISTS);
           }
         }
 
         await updateUser(id, input);
         const updatedUser = await getUserById(id);
-        if (updatedUser !== undefined) {
-          return renderUser(updatedUser);
+        if (!updatedUser) {
+          throw errorForType(ErrorType.USER_NOT_FOUND);
         }
-
-        return errorForType(ErrorType.USER_NOT_FOUND);
+        return renderUser(updatedUser);
       }
     }
   }
