@@ -1,5 +1,5 @@
 import { IResolverHandler, AuthType } from '../../../middleware';
-import { errorForType, ErrorType } from '../../../utils/errors';
+import { errorForType, ErrorType } from '../shared/errors';
 
 import { getUserById, renderUser } from '../utils';
 

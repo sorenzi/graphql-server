@@ -1,7 +1,7 @@
 import Joi = require('joi');
 import { IResolverHandler, AuthType } from '../../../middleware';
 import { MutationDeleteUserArgs } from '../../../types/types';
-import { errorForType, ErrorType } from '../../../utils/errors';
+import { errorForType, ErrorType } from '../shared/errors';
 import { UserRole } from '../constants';
 
 import { deleteUser, getUserById } from '../utils';

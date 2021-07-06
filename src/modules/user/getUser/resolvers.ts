@@ -1,6 +1,6 @@
 import { IResolverHandler, AuthType } from '../../../middleware';
 import { QueryGetUserArgs } from '../../../types/types';
-import { errorForType, ErrorType } from '../../../utils/errors';
+import { errorForType, ErrorType } from '../shared/errors';
 import * as Joi from 'joi';
 
 import { getUserById, renderUser } from '../utils';

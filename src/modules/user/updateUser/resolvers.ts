@@ -1,7 +1,7 @@
 import Joi = require('joi');
 import { AuthType, IResolverHandler } from '../../../middleware';
 import { MutationUpdateUserArgs } from '../../../types/types';
-import { errorForType, ErrorType } from '../../../utils/errors';
+import { errorForType, ErrorType } from '../shared/errors';
 
 import { getUserByEmail, getUserById, renderUser, updateUser } from '../utils';
 import { schema } from './inputSchema';

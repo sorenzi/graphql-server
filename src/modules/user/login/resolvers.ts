@@ -3,7 +3,7 @@ import { IResolverHandler } from '../../../middleware';
 import { getUserByEmail, renderLoginResponse } from '../utils';
 import * as bcrypt from 'bcrypt';
 import { QueryLoginArgs } from '../../../types/types';
-import { errorForType, ErrorType } from '../../../utils/errors';
+import { errorForType, ErrorType } from '../shared/errors';
 import { schema } from './inputSchema';
 import { createAccessJWT, createRefreshJWT } from '../../../utils/jwtUtil';
 
