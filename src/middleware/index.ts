@@ -1,4 +1,4 @@
-// This is middleware will add a layer of user authentication and authorization
+// This middleware will add a layer of user authentication and authorization
 // and input payload validation using Joi. Adding authentication and validation is optional
 // and may vary depending on your needs in the resolver handler implementation
 import Joi = require('joi');
