@@ -73,11 +73,12 @@ test('Get non existing user', async () => {
   const authToken = generateAccessToken(newUser);
 
   client.setHeader('authorization', `Bearer ${authToken}`);
-  const response = await client.request(query(), {
-    getUserId: 'be650e6a-bde0-419d-b06a-f8d6119ba611'
-  });
 
-  expect(response).toEqual({
-    getUser: { message: 'User not found', code: 'UserNotFoundError' }
-  });
+  try {
+    await client.request(query(), {
+      getUserId: 'be650e6a-bde0-419d-b06a-f8d6119ba611'
+    });
+  } catch (err) {
+    expect(err.response.errors[0].message).toEqual('User not found');
+  }
 });

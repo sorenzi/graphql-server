@@ -1,5 +1,3 @@
-import { IResolverHandler } from '../../../middleware';
-
 import { createUser, getUserByEmail, renderLoginResponse } from '../utils';
 import * as bcrypt from 'bcrypt';
 import { MutationRegisterArgs } from '../../../types/types';
@@ -7,14 +5,15 @@ import { errorForType, ErrorType } from '../shared/errors';
 import { schema } from './inputSchema';
 import { UserRole } from '../constants';
 import { createAccessJWT, createRefreshJWT } from '../../../utils/jwtUtil';
+import {
+  ResolverMap,
+  resolverWrapper
+} from '../../../resolverHandler/validationResolver';
 
-export const handler: IResolverHandler = {
-  validate: {
-    input: schema
-  },
-  resolver: {
-    Mutation: {
-      register: async (_: any, args: MutationRegisterArgs) => {
+export const resolver: ResolverMap = {
+  Mutation: {
+    register: resolverWrapper(
+      async (_: any, args: MutationRegisterArgs) => {
         const { email, password, first_name, last_name, role } = args.input;
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -37,7 +36,12 @@ export const handler: IResolverHandler = {
         const accessJWT = createAccessJWT(user);
         const refreshJWT = createRefreshJWT(user);
         return renderLoginResponse(user, accessJWT, refreshJWT);
+      },
+      {
+        validate: {
+          input: schema
+        }
       }
-    }
+    )
   }
 };

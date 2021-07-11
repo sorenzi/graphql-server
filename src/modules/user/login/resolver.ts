@@ -1,19 +1,18 @@
-import { IResolverHandler } from '../../../middleware';
-
 import { getUserByEmail, renderLoginResponse } from '../utils';
 import * as bcrypt from 'bcrypt';
 import { QueryLoginArgs } from '../../../types/types';
 import { errorForType, ErrorType } from '../shared/errors';
 import { schema } from './inputSchema';
 import { createAccessJWT, createRefreshJWT } from '../../../utils/jwtUtil';
+import {
+  ResolverMap,
+  resolverWrapper
+} from '../../../resolverHandler/validationResolver';
 
-export const handler: IResolverHandler = {
-  validate: {
-    input: schema
-  },
-  resolver: {
-    Query: {
-      login: async (_: any, args: QueryLoginArgs) => {
+export const resolver: ResolverMap = {
+  Query: {
+    login: resolverWrapper(
+      async (_: any, args: QueryLoginArgs) => {
         const { email, password } = args.input;
         const user = await getUserByEmail(email);
         if (!user) {
@@ -27,8 +26,14 @@ export const handler: IResolverHandler = {
 
         const accessJWT = createAccessJWT(user);
         const refreshJWT = createRefreshJWT(user);
-        return renderLoginResponse(user, accessJWT, refreshJWT);
+        const response = renderLoginResponse(user, accessJWT, refreshJWT);
+        return response;
+      },
+      {
+        validate: {
+          input: schema
+        }
       }
-    }
+    )
   }
 };

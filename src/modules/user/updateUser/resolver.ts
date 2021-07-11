@@ -1,22 +1,21 @@
-import Joi = require('joi');
-import { AuthType, IResolverHandler } from '../../../middleware';
+import {
+  AuthType,
+  ResolverMap,
+  resolverWrapper
+} from '../../../resolverHandler/validationResolver';
+
 import { MutationUpdateUserArgs } from '../../../types/types';
 import { errorForType, ErrorType } from '../shared/errors';
-
-import { getUserByEmail, getUserById, renderUser, updateUser } from '../utils';
+import Joi = require('joi');
 import { schema } from './inputSchema';
 
-export const handler: IResolverHandler = {
-  auth: {
-    strategies: [AuthType.JWT]
-  },
-  validate: {
-    id: Joi.string().guid(),
-    input: schema
-  },
-  resolver: {
-    Mutation: {
-      updateUser: async (_: any, args: MutationUpdateUserArgs) => {
+import { getUserByEmail, getUserById, renderUser, updateUser } from '../utils';
+import { UserRole } from '../constants';
+
+export const resolver: ResolverMap = {
+  Mutation: {
+    updateUser: resolverWrapper(
+      async (_: any, args: MutationUpdateUserArgs) => {
         const { id } = args;
         const { input } = args;
 
@@ -40,7 +39,17 @@ export const handler: IResolverHandler = {
           throw errorForType(ErrorType.USER_NOT_FOUND);
         }
         return renderUser(updatedUser);
+      },
+      {
+        auth: {
+          strategies: [AuthType.JWT],
+          scope: [UserRole.ADMIN]
+        },
+        validate: {
+          id: Joi.string().guid(),
+          input: schema
+        }
       }
-    }
+    )
   }
 };
