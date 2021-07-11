@@ -97,12 +97,16 @@ test('Delete user that doesnt exists', async () => {
   const authToken = generateAccessToken(admin);
 
   client.setHeader('authorization', `Bearer ${authToken}`);
-  const response = await client.request(mutation(), {
-    deleteUserId: 'c4cf454e-02fe-4728-bc44-258005262d92'
-  });
-  expect(response).toEqual({
-    deleteUser: { message: 'User not found', code: 'UserNotFoundError' }
-  });
+  try {
+    await client.request(mutation(), {
+      deleteUserId: 'c4cf454e-02fe-4728-bc44-258005262d92'
+    });
+  } catch (err) {
+    expect(err.response.errors[0].message).toEqual('User not found');
+    return;
+  }
+  // we should not reach this point
+  expect(false).toBeTruthy();
 });
 
 // making sure we parse non variable user input correctly

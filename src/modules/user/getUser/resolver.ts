@@ -1,20 +1,18 @@
-import { IResolverHandler, AuthType } from '../../../middleware';
+import {
+  AuthType,
+  ResolverMap,
+  resolverWrapper
+} from '../../../resolverHandler/validationResolver';
+
 import { QueryGetUserArgs } from '../../../types/types';
 import { errorForType, ErrorType } from '../shared/errors';
-import * as Joi from 'joi';
 
 import { getUserById, renderUser } from '../utils';
 
-export const handler: IResolverHandler = {
-  auth: {
-    strategies: [AuthType.JWT]
-  },
-  validate: {
-    id: Joi.string().guid()
-  },
-  resolver: {
-    Query: {
-      getUser: async (_: any, args: QueryGetUserArgs) => {
+export const resolver: ResolverMap = {
+  Query: {
+    getUser: resolverWrapper(
+      async (_: any, args: QueryGetUserArgs) => {
         const { id } = args;
         const user = await getUserById(id);
 
@@ -22,7 +20,12 @@ export const handler: IResolverHandler = {
           throw errorForType(ErrorType.USER_NOT_FOUND);
         }
         return renderUser(user);
+      },
+      {
+        auth: {
+          strategies: [AuthType.JWT]
+        }
       }
-    }
+    )
   }
 };

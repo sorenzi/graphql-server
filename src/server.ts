@@ -1,10 +1,9 @@
-import 'reflect-metadata';
 import * as path from 'path';
 import * as glob from 'glob';
 
 import { createTypeormConnection } from './utils/createTypeormConnection';
-import validationMiddleware, { IResolverHandler } from './middleware';
 import { JWTSecret } from './utils/jwtUtil';
+import validationMiddleware from './validationMiddleware';
 
 const { ApolloServer } = require('apollo-server-express');
 const { loadFilesSync } = require('@graphql-tools/load-files');
@@ -23,10 +22,9 @@ export const startServer = async () => {
 
   const typeDefs = mergeTypeDefs(allSchemas);
   const resolverHandlers = glob
-    .sync(`${pathToModules}/**/**/resolvers.?s`)
+    .sync(`${pathToModules}/**/**/resolver.?s`)
     .map((x) => {
-      const { handler } = require(x);
-      return handler as IResolverHandler;
+      return require(x);
     });
 
   const allResolvers = resolverHandlers.map((handler) => {
@@ -45,14 +43,7 @@ export const startServer = async () => {
   app.use(express.json());
   const server = new ApolloServer({
     schema,
-    context: validationMiddleware(resolverHandlers, JWTSecret),
-    formatError: (err: any) => {
-      // Removing Apollo Server unnecessary message error prefix
-      if (err.message.startsWith('Context creation failed: ')) {
-        err.message = err.message.replace('Context creation failed: ', '');
-      }
-      return err;
-    }
+    context: validationMiddleware(JWTSecret)
   });
 
   server.applyMiddleware({ app });
