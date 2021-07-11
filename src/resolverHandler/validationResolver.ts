@@ -67,7 +67,7 @@ export const resolverWrapper =
       return next(source, args, context, info);
     };
 
-export const validateUserInput = (
+const validateUserInput = (
   schema: Joi.ObjectSchema<any> | Joi.Schema,
   payload: any
 ) => {
